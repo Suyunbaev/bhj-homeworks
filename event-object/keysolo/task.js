@@ -16,20 +16,36 @@ class Game {
     this.lossElement.textContent = 0;
   }
 
+
   registerEvents() {
-    /*
-      TODO:
-      Написать обработчик события, который откликается
-      на каждый введённый символ.
-      В случае правильного ввода слова вызываем this.success()
-      При неправильном вводе символа - this.fail();
-     */
+      let self = this;
+      document.addEventListener('keydown', updatePlayer);
+      let symbols = document.querySelectorAll('.symbol');
+
+      function updatePlayer(event) {
+        let key = event.key
+        this.currentSymbol = document.querySelector('.symbol_current');
+        if (key == this.currentSymbol.textContent) {
+          
+          self.success ()
+          let index = [...symbols].findIndex((element) => element.classList.contains('symbol_current'));
+          let nextIndex = index + 1;
+          symbols[nextIndex].classList.add('symbol_current');
+          symbols[index].classList.remove('symbol_current');
+          console.log('if do' ,  symbols[0])
+        }
+      
+      else {
+        self.fail ()
+      }
+    }
   }
 
   success() {
     this.currentSymbol.classList.add('symbol_correct');
     this.currentSymbol = this.currentSymbol.nextElementSibling;
     if (this.currentSymbol !== null) {
+
       return;
     }
 
